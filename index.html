@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="./assets/css/style.css" /> -->
+    <title>Weather Dashboard</title>
+</head>
+
+<body>
+    <header class="container-fluid bg-dark text-light mb-5 p-3">
+        <h1 display="2">Weather Dashboard</h1>
+    </header>
+    <main class="container my-5">
+        <div class="row">
+            <div class="card col-12 col-md-4 col-xl-3">
+                <h3 class="card-header">Search by City</h3>
+                <form id="user-form" class="card-body">
+                    <label class="form-label" for="search">Enter a City</label>
+                    <input class="form-control form-control-lg" id="search-field" type="text"
+                        placeholder="Enter a city to search">
+                    <button type="button" class="btn btn-info" id="submit">Search</button>
+                </form>
+            </div>
+            <section class="card col-12 col-md-8 col-xl9">
+                <div class="card-body" id="current">
+                    <h3 class="card-title">Current Weather</h3>
+                    <h4 class="card-header" id="city-date">City Name 3/22/21</h4>
+                        <ul>
+                            <!-- city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index -->
+                            <li id="icon"></li>
+                            <li id="temp"></li>
+                            <li id="humidity"></li>
+                            <li id="wind-speed"></li>
+                            <li id="uv-index"></li>
+                        </ul>
+                </div>
+                <div class="card">
+                    <h3 class="card-header">5-Day Forecast</h3>
+                    <div class="d-flex">
+                        <div class="card-body" id="day1">
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing lor.</p>
+                        </div>
+                        <div class="card-body" id="day2">
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing lor.</p>
+                        </div>
+                        <div class="card-body" id="day3">
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing lor.</p>
+                        </div>
+                        <div class="card-body" id="day4">
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing lor.</p>
+                        </div>
+                        <div class="card-body" id="day5">
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing lor.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <script src="./assets/js/script.js"></script>
+</body>
+
+</html>
