@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
     <!-- <link rel="stylesheet" href="./assets/css/style.css" /> -->
     <title>Weather Dashboard</title>
 </head>
@@ -29,15 +30,16 @@
             <section class="card col-12 col-md-8 col-xl9">
                 <div class="card-body" id="current">
                     <h3 class="card-title">Current Weather</h3>
-                    <h4 class="card-header" id="city-date">City Name 3/22/21</h4>
-                        <ul>
-                            <!-- city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index -->
-                            <li id="icon"></li>
-                            <li id="temp"></li>
-                            <li id="humidity"></li>
-                            <li id="wind-speed"></li>
-                            <li id="uv-index"></li>
-                        </ul>
+                    <div class="d-flex card-header"><h4 id="city-name"></h4><h4 id="date"></h4></div>
+                    
+                    <ul>
+                        <!-- city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index -->
+                        <li><img src='' id='icon'></li>
+                        <li id="temp"></li>
+                        <li id="humidity"></li>
+                        <li id="wind-speed"></li>
+                        <li id="uv-index"></li>
+                    </ul>
                 </div>
                 <div class="card">
                     <h3 class="card-header">5-Day Forecast</h3>
