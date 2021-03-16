@@ -30,8 +30,11 @@
             <section class="card col-12 col-md-8 col-xl9">
                 <div class="card-body" id="current">
                     <h3 class="card-title">Current Weather</h3>
-                    <div class="d-flex card-header"><h4 id="city-name"></h4><h4 id="date"></h4></div>
-                    
+                    <div class="d-flex card-header">
+                        <h4 id="city-name"></h4>
+                        <h4 id="date"></h4>
+                    </div>
+
                     <ul>
                         <!-- city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index -->
                         <li><img src='' id='icon'></li>
@@ -43,7 +46,56 @@
                 </div>
                 <div class="card">
                     <h3 class="card-header">5-Day Forecast</h3>
-                    <div class="d-flex">
+                    <!-- the date, an icon representation of weather conditions, the temperature, and the humidity -->
+                    <table class="table table-sm p-5">
+                        <thead  class="thead-dark">
+                          <tr>
+                            <th scope="col">Mon 3/15</th>
+                            <th scope="col">Mon 3/15</th>
+                            <th scope="col">Mon 3/15</th>
+                            <th scope="col">Mon 3/15</th>
+                            <th scope="col">Mon 3/15</th>
+                          </tr>
+                        <tbody>
+                            <tr class=>
+                                <td class="temp">A</td>
+                                <td class="temp">B</td>
+                                <td class="temp">B</td>
+                                <td class="temp">C</td>
+                                <td class="temp">D</td>
+                            </tr>
+                            <tr>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>@fat</td>
+                                <td>@mdo</td>
+                                <td>@mdo</td>
+                            </tr>
+                            <tr>
+                                <td>Larry</td>
+                                <td>the Bird</td>
+                                <td>@twitter</td>
+                                <td>@mdo</td>
+                                <td>@mdo</td>
+                            </tr>
+                            <tr>
+            
+                                <td>Larry</td>
+                                <td>the Bird</td>
+                                <td>@twitter</td>
+                                <td>@mdo</td>
+                                <td>@mdo</td>
+                            </tr>
+                            <tr>
+                                <td>Larry</td>
+                                <td>the Bird</td>
+                                <td>@twitter</td>
+                                <td>@mdo</td>
+                                <td>@mdo</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- <div class="d-flex">
                         <div class="card-body" id="day1">
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing lor.</p>
                         </div>
@@ -59,7 +111,7 @@
                         <div class="card-body" id="day5">
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing lor.</p>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </section>
         </div>
