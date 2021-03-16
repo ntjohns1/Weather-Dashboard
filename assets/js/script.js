@@ -4,14 +4,13 @@
 var userFormEl = document.querySelector('#user-form');
 var searchInputEl = document.querySelector('#search-field');
 var searchButton = document.querySelector('#submit');
-var cityDate = document.querySelector('#city-name');
+var cityName = document.querySelector('#city-name');
 var date = document.getElementById('date');
 var icon = document.querySelector('#icon');
 var temp = document.querySelector('#temp');
 var humidity = document.querySelector('#humidity');
 var windSpeed = document.querySelector('#wind-speed');
 var uvIndex = document.querySelector('#uv-index');
-var uviMarker = document.querySelector('#uvi-marker')
 var day1 = document.querySelector('#day1');
 var day2 = document.querySelector('#day2');
 var day3 = document.querySelector('#day3');
@@ -24,9 +23,7 @@ var day5 = document.querySelector('#day5');
 // calls geocoding API to use lat and lon in next function
 // set up form element text guide that says enter city, state code, and country code
 var getCitySearch = function () {
-
   var searchInput = searchInputEl.value.trim();
-
   var apiUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=' + searchInput + '&limit=10&appid=3b41e908f8123a87745091fffda5bb2b';
   fetch(apiUrl)
     .then(function (response) {
@@ -35,11 +32,10 @@ var getCitySearch = function () {
     })
     .then(function (data) {
       console.log(data);
-      var cityDate = document.querySelector('#city-name');
       var currentName = data[0].name;
       var currentState = data[0].state;
       var country = data[0].country;
-      cityDate.textContent = currentName + ', ' + currentState + ', ' + country;
+      cityName.textContent = currentName + ', ' + currentState + ', ' + country;
       // when dealing with multiple search results, append boostrap 'select' list to search field
       // for (var i = 0; i < data.length; i++) {
       // console.log(data[i].lat);
@@ -52,12 +48,12 @@ var getCitySearch = function () {
       fetch(weathURL)
         .then(function (response) {
           if (response.ok) {
-          return response.json();
+            return response.json();
           } else {
             alert('Error: ' + response.statusText);
           }
-          })
-          .catch(function (error) {
+        })
+        .catch(function (error) {
           alert('Unable to connect to Open Weather');
         })
         .then(function (data) {
@@ -81,15 +77,15 @@ var getCitySearch = function () {
           var currentUVI = data.current.uvi;
           console.log(typeof currentUVI);
           if (currentUVI <= 2) {
-            uviMarker.classList.add('UV-lo')
+            uvIndex.classList.add('UV-lo')
           } else if (currentUVI <= 4) {
-            uviMarker.classList.add('UV-med-lo')
+            uvIndex.classList.add('UV-med-lo')
           } else if (currentUVI <= 6) {
-            uviMarker.classList.add('UV-med')
+            uvIndex.classList.add('UV-med')
           } else if (currentUVI <= 8) {
-            uviMarker.classList.add('UV-med-hi')
+            uvIndex.classList.add('UV-med-hi')
           } else {
-            uviMarker.classList.add('UV-hi')
+            uvIndex.classList.add('UV-hi')
           };
 
           // WHEN I view future weather conditions for that city THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, and the humidity
@@ -133,10 +129,25 @@ var getCitySearch = function () {
           for (let i = 0; i < dailyHumidityEls.length; i++) {
             const humidityTxt = dailyHumidityEls[i];
             humidityTxt.innerText = 'humidity: ' + data.daily[i].humidity + '%';
-          }  
+          }
         });
     });
 };
+/*
+searchButton.addEventListener("click", function {
+  var searchInput = searchInputEl.value.trim();
+  // create new button element, use bootstrap to make button list
+  // give button el the class ".buttons"
+  // apply name, state and country value to button, we can either get it from the search field or the data
+  // save buttons to local storage, do we have to save an object?
+  button.textContent = city;
+    localStorage.setItem(key, city);
+  document.querySelectorAll(".buttons").addEventListener("click", function(e) {
+	// this is where we use e.target
+  // plug the value of the button back into the city search function
+
+});
+*/
 // WHEN I click on a city in the search history THEN I am again presented with current and future conditions for that city
 // use local storage to store the data pull function, we'll need to create an object with the info
 
