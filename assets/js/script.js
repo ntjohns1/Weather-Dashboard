@@ -11,6 +11,7 @@ var temp = document.querySelector('#temp');
 var humidity = document.querySelector('#humidity');
 var windSpeed = document.querySelector('#wind-speed');
 var uvIndex = document.querySelector('#uv-index');
+var uviMarker = document.querySelector('#uvi-marker')
 var day1 = document.querySelector('#day1');
 var day2 = document.querySelector('#day2');
 var day3 = document.querySelector('#day3');
@@ -50,7 +51,14 @@ var getCitySearch = function () {
       // }
       fetch(weathURL)
         .then(function (response) {
+          if (response.ok) {
           return response.json();
+          } else {
+            alert('Error: ' + response.statusText);
+          }
+          })
+          .catch(function (error) {
+          alert('Unable to connect to Open Weather');
         })
         .then(function (data) {
           console.log(data);
@@ -62,23 +70,70 @@ var getCitySearch = function () {
           var today = moment.unix(timeStamp).format("dddd, MMMM Do YYYY");
           console.log(today);
           var iconCode = data.current.weather[0].icon;
+          date.textContent = ' - ' + today;
           icon.src = "http://openweathermap.org/img/wn/" + iconCode + ".png";
-          temp.textContent = 'Temperature: ' + data.current.temp + ' degrees F';
+          temp.textContent = 'Temperature: ' + data.current.temp + ' °F';
           humidity.textContent = 'Humidity: ' + data.current.humidity + '%';
           windSpeed.textContent = 'Windspeed: ' + data.current.wind_speed + ' mph';
           uvIndex.textContent = 'UV Index: ' + data.current.uvi;
-          date.textContent = ' - ' + today;
-
-          var tempEls = document.querySelectorAll('.temp');
-          console.log(tempEls);
-          for (let i = 0; i < tempEls.length; i++) {
-            const tempEl = tempEls[i];
-            tempEl.innerText = 'whatever'
-          }
-
           // WHEN I view the UV index, THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe.
           // apply class with conditionals like we did in the last assignment
+          var currentUVI = data.current.uvi;
+          console.log(typeof currentUVI);
+          if (currentUVI <= 2) {
+            uviMarker.classList.add('UV-lo')
+          } else if (currentUVI <= 4) {
+            uviMarker.classList.add('UV-med-lo')
+          } else if (currentUVI <= 6) {
+            uviMarker.classList.add('UV-med')
+          } else if (currentUVI <= 8) {
+            uviMarker.classList.add('UV-med-hi')
+          } else {
+            uviMarker.classList.add('UV-hi')
+          };
+
           // WHEN I view future weather conditions for that city THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, and the humidity
+          // looping through table elements with 5-day forecast data.
+          // loop for date in <thead>
+          var dailyForecastDate = document.querySelectorAll('.forecast-date');
+          console.log(dailyForecastDate);
+          for (let i = 0; i < dailyForecastDate.length; i++) {
+            const dailyDateEl = dailyForecastDate[i];
+            const tHeadDate = data.daily[i].dt;
+            var tHead = moment.unix(tHeadDate).format("ddd, M/D");
+            dailyDateEl.innerText = tHead;
+          }
+
+          // loop for icon
+          var dailyForecastIcon = document.querySelectorAll('.forecast-icon');
+          console.log(dailyForecastIcon);
+          for (let i = 0; i < dailyForecastIcon.length; i++) {
+            const dailyIconEl = dailyForecastIcon[i];
+            const dailyIconCode = data.daily[i].weather[0].icon;
+            dailyIconEl.src = "http://openweathermap.org/img/wn/" + dailyIconCode + ".png";
+          }
+
+          // loop for low temp
+          var lowTempEls = document.querySelectorAll('.lo-temp');
+          console.log(lowTempEls);
+          for (let i = 0; i < lowTempEls.length; i++) {
+            const lowTempTxt = lowTempEls[i];
+            lowTempTxt.innerText = 'low: ' + Math.round(data.daily[i].temp.min) + ' °F';
+          }
+          // loop for high temp
+          var highTempEls = document.querySelectorAll('.hi-temp');
+          console.log(highTempEls);
+          for (let i = 0; i < highTempEls.length; i++) {
+            const highTempTxt = highTempEls[i];
+            highTempTxt.innerText = 'high: ' + Math.round(data.daily[i].temp.max) + '°F';
+          }
+          // loop for humidity 
+          var dailyHumidityEls = document.querySelectorAll('.humidity');
+          console.log(dailyHumidityEls);
+          for (let i = 0; i < dailyHumidityEls.length; i++) {
+            const humidityTxt = dailyHumidityEls[i];
+            humidityTxt.innerText = 'humidity: ' + data.daily[i].humidity + '%';
+          }  
         });
     });
 };
