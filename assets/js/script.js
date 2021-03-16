@@ -27,7 +27,7 @@ var getCitySearch = function () {
 
   var searchInput = searchInputEl.value.trim();
 
-  var apiUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + searchInput + '&limit=10&appid=3b41e908f8123a87745091fffda5bb2b';
+  var apiUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=' + searchInput + '&limit=10&appid=3b41e908f8123a87745091fffda5bb2b';
   fetch(apiUrl)
     .then(function (response) {
       console.log(response);
