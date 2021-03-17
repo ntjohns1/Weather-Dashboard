@@ -30,14 +30,14 @@
                 </div>
             </div>
             <section class="card col-12 col-md-8 col-xl9">
-                <div class="card-body" id="current">
+                <div class="card-body" id="current-header">
                     <h3 class="card-title">Current Weather</h3>
                     <div class="d-flex card-header">
                         <h4 id="city-name"></h4>
                         <h4 id="date"></h4>
                     </div>
 
-                    <ul class="list-group list-group-flush">
+                    <ul id= "current-display" class="list-group list-group-flush" hidden>
                         <!-- city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index -->
                         <li class="list-group-item"><img src='' id='icon'></li>
                         <li class="list-group-item" id="temp"></li>
@@ -49,7 +49,7 @@
                 <div class="card">
                     <h3 class="card-header">5-Day Forecast</h3>
                     <!-- the date, an icon representation of weather conditions, the temperature, and the humidity -->
-                    <table class="table table-sm p-5">
+                    <table id= "forecast-table" class="table table-sm p-5" hidden>
                         <thead  class="thead-dark">
                           <tr>
                             <th scope="col" class="forecast-date">Mon 3/15</th>
@@ -89,23 +89,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <!-- <div class="d-flex">
-                        <div class="card-body" id="day1">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing lor.</p>
-                        </div>
-                        <div class="card-body" id="day2">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing lor.</p>
-                        </div>
-                        <div class="card-body" id="day3">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing lor.</p>
-                        </div>
-                        <div class="card-body" id="day4">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing lor.</p>
-                        </div>
-                        <div class="card-body" id="day5">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing lor.</p>
-                        </div>
-                    </div> -->
+
                 </div>
             </section>
         </div>

@@ -13,7 +13,7 @@ var windSpeed = document.querySelector('#wind-speed');
 var uvIndex = document.querySelector('#uv-index');
 var buttonDiv = document.querySelector('#search-history');
 var buttonEl = document.querySelectorAll(".buttons")
-var buttonArray = [];
+var buttonArray = new Array();
 console.log(buttonArray)
 
 
@@ -82,6 +82,8 @@ var getCitySearch = function () {
           alert('Unable to connect to Open Weather');
         })
         .then(function (data) {
+          document.getElementById('current-display').removeAttribute('hidden');
+          document.getElementById('forecast-table').removeAttribute('hidden');
           
           console.log(data);
 
@@ -165,13 +167,21 @@ var getCitySearch = function () {
 console.log(buttonArray)
 
 
-
+function setSaves() {
+  var buttonVal = buttonDiv.children.innerHTML;
+  for (let i = 0; i < buttonEl.length; i++) {
+    const element = buttonEl[i];
+    buttonArray.push(buttonVal[i]);
+  }
+  console.log(buttonVal);
+  localStorage.setItem('savedSearch', JSON.stringify(buttonArray));
+}
 
 // event delegation for event listener
 buttonDiv.addEventListener("click", function (e) {
   for (let i = 0; i < buttonEl.length; i++) {
     const saveButton = buttonEl[i];
-    console.log(e.target.textContent)
+    console.log(e.target.innerHTML)
     console.log(saveButton.textContent)
   };
 });
@@ -192,6 +202,7 @@ searchButton.addEventListener('click', function (event) {
   event.preventDefault();
   getCitySearch();
   getSaves();
+  setSaves();
 });
 
 
