@@ -35,11 +35,21 @@ var getCitySearch = function () {
       var currentName = data[0].name;
       var currentState = data[0].state;
       var country = data[0].country;
-      cityName.textContent = currentName + ', ' + currentState + ', ' + country;
+      var nameData = currentName + ', ' + currentState + ', ' + country;
+      cityName.textContent = nameData;
       // when dealing with multiple search results, append boostrap 'select' list to search field
       // for (var i = 0; i < data.length; i++) {
       // console.log(data[i].lat);
       // console.log(data[i].lon);
+      // Deal with appending elements then deal with event listeners
+      var buttonDiv = document.querySelector('#search-history');
+      var buttonEl = document.createElement('button');
+      buttonEl.setAttribute('class', 'list-group-item list-group-item-action');
+      buttonEl.classList.add('buttons');
+      buttonEl.setAttribute('type', 'button');
+      var buttonTxt = document.createTextNode(nameData);
+      buttonEl.appendChild(buttonTxt);
+      buttonDiv.appendChild(buttonEl);
       var lat = data[0].lat;
       var lon = data[0].lon;
       var weathURL = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&units=imperial&appid=3b41e908f8123a87745091fffda5bb2b';
@@ -52,6 +62,7 @@ var getCitySearch = function () {
           } else {
             alert('Error: ' + response.statusText);
           }
+          // line49
         })
         .catch(function (error) {
           alert('Unable to connect to Open Weather');
@@ -133,8 +144,13 @@ var getCitySearch = function () {
         });
     });
 };
+
+// document.querySelectorAll(".buttons").addEventListener("click", function (e) {
+                // this is where we use e.target
+                // plug the value of the button back into the city search function
+            
 /*
-searchButton.addEventListener("click", function {
+searchButton.addEventListener("click", function() {
   var searchInput = searchInputEl.value.trim();
   // create new button element, use bootstrap to make button list
   // give button el the class ".buttons"
@@ -143,7 +159,7 @@ searchButton.addEventListener("click", function {
   button.textContent = city;
     localStorage.setItem(key, city);
   document.querySelectorAll(".buttons").addEventListener("click", function(e) {
-	// this is where we use e.target
+  // this is where we use e.target
   // plug the value of the button back into the city search function
 
 });
@@ -167,3 +183,6 @@ alert('Unable to connect to Open Weather');
 
 
 searchButton.addEventListener('click', getCitySearch);
+
+
+
