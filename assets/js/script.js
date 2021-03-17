@@ -11,19 +11,32 @@ var temp = document.querySelector('#temp');
 var humidity = document.querySelector('#humidity');
 var windSpeed = document.querySelector('#wind-speed');
 var uvIndex = document.querySelector('#uv-index');
-var day1 = document.querySelector('#day1');
-var day2 = document.querySelector('#day2');
-var day3 = document.querySelector('#day3');
-var day4 = document.querySelector('#day4');
-var day5 = document.querySelector('#day5');
+var buttonDiv = document.querySelector('#search-history');
+var buttonEl = document.querySelectorAll(".buttons")
+var buttonArray = [];
+console.log(buttonArray)
+
 
 // function to clear out form see review activity solution
 
-// THEN I am presented with current and future conditions for that city and that city is added to the search history use the city search to apply the lat/lon element to the call
+// THEN I am presented with current and future conditions for that city and that city is added to the search history 
+// use the city search to apply the lat/lon element to the call
 // calls geocoding API to use lat and lon in next function
 // set up form element text guide that says enter city, state code, and country code
+function getSaves() {
+  var searchSaves = JSON.parse(localStorage.getItem("savedSearch"));
+  if (searchSaves !== null) {
+    for (let i = 0; i < searchSaves.length; i++) {
+      buttonArray.push(searchSaves[i])
+    }
+  } else {
+    return;
+  }
+}
+
 var getCitySearch = function () {
   var searchInput = searchInputEl.value.trim();
+  console.log(searchInput);
   var apiUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=' + searchInput + '&limit=10&appid=3b41e908f8123a87745091fffda5bb2b';
   fetch(apiUrl)
     .then(function (response) {
@@ -41,20 +54,21 @@ var getCitySearch = function () {
       // for (var i = 0; i < data.length; i++) {
       // console.log(data[i].lat);
       // console.log(data[i].lon);
-      // Deal with appending elements then deal with event listeners
-      var buttonDiv = document.querySelector('#search-history');
+      // }
       var buttonEl = document.createElement('button');
       buttonEl.setAttribute('class', 'list-group-item list-group-item-action');
       buttonEl.classList.add('buttons');
       buttonEl.setAttribute('type', 'button');
       var buttonTxt = document.createTextNode(nameData);
+      // var textGrab = buttonDiv.children.innerHTML
       buttonEl.appendChild(buttonTxt);
-      buttonDiv.appendChild(buttonEl);
+      buttonDiv.prepend(buttonEl);
+      buttonArray.push(buttonTxt);
       var lat = data[0].lat;
       var lon = data[0].lon;
       var weathURL = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&units=imperial&appid=3b41e908f8123a87745091fffda5bb2b';
       console.log(weathURL);
-      // }
+
       fetch(weathURL)
         .then(function (response) {
           if (response.ok) {
@@ -62,12 +76,13 @@ var getCitySearch = function () {
           } else {
             alert('Error: ' + response.statusText);
           }
-          // line49
+
         })
         .catch(function (error) {
           alert('Unable to connect to Open Weather');
         })
         .then(function (data) {
+          
           console.log(data);
 
           /*WHEN I view current weather conditions for that city
@@ -141,48 +156,43 @@ var getCitySearch = function () {
             const humidityTxt = dailyHumidityEls[i];
             humidityTxt.innerText = 'humidity: ' + data.daily[i].humidity + '%';
           }
+          console.log(buttonArray)  
         });
+      console.log(buttonArray)
     });
+    console.log(buttonArray)
 };
+console.log(buttonArray)
 
-// document.querySelectorAll(".buttons").addEventListener("click", function (e) {
-                // this is where we use e.target
-                // plug the value of the button back into the city search function
-            
-/*
-searchButton.addEventListener("click", function() {
-  var searchInput = searchInputEl.value.trim();
-  // create new button element, use bootstrap to make button list
-  // give button el the class ".buttons"
-  // apply name, state and country value to button, we can either get it from the search field or the data
-  // save buttons to local storage, do we have to save an object?
-  button.textContent = city;
-    localStorage.setItem(key, city);
-  document.querySelectorAll(".buttons").addEventListener("click", function(e) {
-  // this is where we use e.target
-  // plug the value of the button back into the city search function
 
+
+
+// event delegation for event listener
+buttonDiv.addEventListener("click", function (e) {
+  for (let i = 0; i < buttonEl.length; i++) {
+    const saveButton = buttonEl[i];
+    console.log(e.target.textContent)
+    console.log(saveButton.textContent)
+  };
 });
-*/
-// WHEN I click on a city in the search history THEN I am again presented with current and future conditions for that city
-// use local storage to store the data pull function, we'll need to create an object with the info
 
-// Durham, NC, US
-/*
-} else {
-  alert('Error: ' + response.statusText);
-}
-})
-.catch(function (error) {
-alert('Unable to connect to Open Weather');
+
+
+// this is where we use e.target
+// plug the value of the button back into the city search function
+// then deal with local storage
+
+
+
+
+
+
+
+searchButton.addEventListener('click', function (event) {
+  event.preventDefault();
+  getCitySearch();
+  getSaves();
 });
-};
-*/
-
-
-
-
-searchButton.addEventListener('click', getCitySearch);
 
 
 
