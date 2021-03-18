@@ -15,15 +15,30 @@ var buttonDiv = document.querySelector('#search-history');
 var buttonEl = document.querySelectorAll(".buttons")
 var buttonArray = new Array();
 
-buttonDiv.addEventListener("click", function (e) {
-  e.preventDefault()
+
+var formSubmitHandler = function (e) {
+  e.preventDefault();
+
+  var searchInput = searchInputEl.value.trim();
+
+  if (searchInput) {
+    getCitySearch(searchInput);
+
+    repoContainerEl.textContent = '';
+    nameInputEl.value = '';
+  } 
+  else {
+    alert('Search format should be city, state code, country code');}
+};
+  var buttonClickHandler = function (e) {
   for (let i = 0; i < buttonEl.length; i++) {
     var saveClickSearch = e.target.innerHTML;
-    getCitySearch(saveClickSearch)  
   };
-});
-
-// function to clear out form see review activity solution
+  if (saveClickSearch) {
+    getCitySearch(saveClickSearch);
+    repoContainerEl.textContent = '';
+  }
+};
 
 // THEN I am presented with current and future conditions for that city and that city is added to the search history 
 // use the city search to apply the lat/lon element to the call
@@ -50,8 +65,9 @@ function getSaves() {
   }
 }
 
-function getCitySearch () {
-  var searchInput = searchInputEl.value.trim();
+var getCitySearch = function(searchInput) {
+  
+  console.log(searchInput);
   var apiURL = 'https://api.openweathermap.org/geo/1.0/direct?q=' + searchInput + '&limit=10&appid=3b41e908f8123a87745091fffda5bb2b';
   fetch(apiURL)
     .then(function (response) {
@@ -177,14 +193,10 @@ function getCitySearch () {
           localStorage.setItem('savedSearch', JSON.stringify(buttonArray));
         });
     });
-  searchInputEl.textContent= '';
 };
 // event delegation for event listener
-
-searchButton.addEventListener('click', function (e) {
-  e.preventDefault();
-  getCitySearch();
- });
+buttonDiv.addEventListener("click", getCitySearch);
+searchButton.addEventListener('click',getCitySearch);
  getSaves();
 
 

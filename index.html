@@ -19,14 +19,18 @@
     <main class="container my-5">
         <div class="row">
             <div class="card col-12 col-md-4 col-xl-3">
-                <h3 class="card-header">Search by City</h3>
-                <form id="user-form" class="card-body">
-                    <label class="form-label" for="search">Enter a City</label>
-                    <input class="form-control form-control-lg" id="search-field" type="text"
-                        placeholder="Enter a city to search">
-                    <button type="button" class="btn btn-info" id="submit">Search</button>
-                </form>
-                <div class="list-group" id="search-history">
+                <div>
+                    <h3 class="card-header">Search by City</h3>
+                    <form id="user-form" class="card-body">
+                        <label class="form-label" for="search">Enter a City</label>
+                        <input class="form-control form-control-lg" id="search-field" type="text"
+                            placeholder="Enter a city to search">
+                        <button type="button" class="btn btn-info" id="submit">Search</button>
+                    </form>
+                </div>
+                <div class="d-flex align-items-baseline">
+                    <div class="list-group" id="search-history">
+                    </div>
                 </div>
             </div>
             <section class="card col-12 col-md-8 col-xl9">
@@ -37,7 +41,7 @@
                         <h4 id="date"></h4>
                     </div>
 
-                    <ul id= "current-display" class="list-group list-group-flush" hidden>
+                    <ul id="current-display" class="list-group list-group-flush" hidden>
                         <!-- city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index -->
                         <li class="list-group-item"><img src='' id='icon'></li>
                         <li class="list-group-item" id="temp"></li>
@@ -49,29 +53,29 @@
                 <div class="card">
                     <h3 class="card-header">5-Day Forecast</h3>
                     <!-- the date, an icon representation of weather conditions, the temperature, and the humidity -->
-                    <table id= "forecast-table" class="table table-sm p-5" hidden>
-                        <thead  class="thead-dark">
-                          <tr>
-                            <th scope="col" class="forecast-date">Mon 3/15</th>
-                            <th scope="col" class="forecast-date">Mon 3/15</th>
-                            <th scope="col" class="forecast-date">Mon 3/15</th>
-                            <th scope="col" class="forecast-date">Mon 3/15</th>
-                            <th scope="col" class="forecast-date">Mon 3/15</th>
-                          </tr>
+                    <table id="forecast-table" class="table table-sm p-5" hidden>
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col" class="forecast-date">Mon 3/15</th>
+                                <th scope="col" class="forecast-date">Mon 3/15</th>
+                                <th scope="col" class="forecast-date">Mon 3/15</th>
+                                <th scope="col" class="forecast-date">Mon 3/15</th>
+                                <th scope="col" class="forecast-date">Mon 3/15</th>
+                            </tr>
                         <tbody>
                             <tr class=>
-                                <tr>
-                                <td><img class= "forecast-icon"src=""></td>
-                                <td><img class= "forecast-icon"src=""></td>
-                                <td><img class= "forecast-icon"src=""></td>
-                                <td><img class= "forecast-icon"src=""></td>
-                                <td><img class= "forecast-icon"src=""></td>
+                            <tr>
+                                <td><img class="forecast-icon" src=""></td>
+                                <td><img class="forecast-icon" src=""></td>
+                                <td><img class="forecast-icon" src=""></td>
+                                <td><img class="forecast-icon" src=""></td>
+                                <td><img class="forecast-icon" src=""></td>
                             </tr>
-                                <td class="hi-temp"></td>
-                                <td class="hi-temp"></td>
-                                <td class="hi-temp"></td>
-                                <td class="hi-temp"></td>
-                                <td class="hi-temp"></td>
+                            <td class="hi-temp"></td>
+                            <td class="hi-temp"></td>
+                            <td class="hi-temp"></td>
+                            <td class="hi-temp"></td>
+                            <td class="hi-temp"></td>
                             </tr>
                             <tr>
                                 <td class="lo-temp"></td>
@@ -94,7 +98,7 @@
             </section>
         </div>
     </main>
-    <script src="./assets/js/script.js"></script>
+    <script src="./assets/js/script_copy.js"></script>
 </body>
 
 </html>
