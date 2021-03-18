@@ -25,9 +25,27 @@ console.log(buttonArray)
 // set up form element text guide that says enter city, state code, and country code
 function getSaves() {
   var searchSaves = JSON.parse(localStorage.getItem("savedSearch"));
+  console.log(searchSaves);
   if (searchSaves !== null) {
-    for (let i = 0; i < searchSaves.length; i++) {
-      buttonArray.push(searchSaves[i])
+    for (let i = 0; i < 8; i++) {
+      var buttonEl = document.createElement('button');
+      buttonEl.innerHTML = searchSaves[i];
+      buttonEl.setAttribute('class', 'list-group-item list-group-item-action');
+      buttonEl.classList.add('buttons');
+      buttonEl.setAttribute('type', 'button');
+      if (buttonEl.innerHTML === 'undefined') {
+      buttonEl.classList.add('hidden');
+      }
+      if (buttonEl.innerHTML === '[object Object]') {
+        buttonEl.classList.add('hidden');  
+      }
+      if (buttonEl.innerHTML === '') {
+        buttonEl.classList.add('hidden');
+      }
+      // var textGrab = buttonDiv.children.innerHTML
+   
+      buttonDiv.append(buttonEl);
+      buttonArray.push(searchSaves[i]);
     }
   } else {
     return;
@@ -84,7 +102,7 @@ var getCitySearch = function () {
         .then(function (data) {
           document.getElementById('current-display').removeAttribute('hidden');
           document.getElementById('forecast-table').removeAttribute('hidden');
-          
+
           console.log(data);
 
           /*WHEN I view current weather conditions for that city
@@ -158,52 +176,25 @@ var getCitySearch = function () {
             const humidityTxt = dailyHumidityEls[i];
             humidityTxt.innerText = 'humidity: ' + data.daily[i].humidity + '%';
           }
-          console.log(buttonArray)  
+          buttonArray.push(buttonEl.innerHTML);
+          localStorage.setItem('savedSearch', JSON.stringify(buttonArray));
         });
-      console.log(buttonArray)
     });
-    console.log(buttonArray)
 };
-console.log(buttonArray)
-
-
-function setSaves() {
-  var buttonVal = buttonDiv.children.innerHTML;
-  for (let i = 0; i < buttonEl.length; i++) {
-    const element = buttonEl[i];
-    buttonArray.push(buttonVal[i]);
-  }
-  console.log(buttonVal);
-  localStorage.setItem('savedSearch', JSON.stringify(buttonArray));
-}
-
 // event delegation for event listener
 buttonDiv.addEventListener("click", function (e) {
   for (let i = 0; i < buttonEl.length; i++) {
     const saveButton = buttonEl[i];
     console.log(e.target.innerHTML)
     console.log(saveButton.textContent)
+    // this is where we use e.target
+    // plug the value of the button back into the city search function
   };
 });
-
-
-
-// this is where we use e.target
-// plug the value of the button back into the city search function
-// then deal with local storage
-
-
-
-
-
-
-
 searchButton.addEventListener('click', function (event) {
   event.preventDefault();
   getCitySearch();
-  getSaves();
-  setSaves();
-});
-
+ });
+ getSaves();
 
 
