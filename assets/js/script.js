@@ -15,28 +15,30 @@ var buttonDiv = document.querySelector('#search-history');
 var buttonEl = document.querySelectorAll(".buttons")
 var buttonArray = new Array();
 
-function getSaves() {
-  var searchSaves = JSON.parse(localStorage.getItem("savedSearch"));
-  console.log(searchSaves);
-  if (searchSaves !== null) {
-    for (let i = 0; i < 8; i++) {
-      var buttonEl = document.createElement('button');
-      buttonEl.innerHTML = searchSaves[i];
-      buttonEl.setAttribute('class', 'list-group-item list-group-item-action');
-      buttonEl.classList.add('buttons');
-      buttonEl.setAttribute('type', 'button');
-      if (buttonEl.innerHTML === 'undefined' || '[object Object]' || '') {
-        buttonEl.classList.add('hidden');
-      }
-      buttonDiv.append(buttonEl);
-    }
-  } else {
-    return;
+function renderSaves() {
+  // Clear search input element
+  searchInputEl.innerHTML = "";
+  // Render a new button for each save
+  for (let i = 0; i < buttonArray.length; i++) {
+    var button = buttonArray[i];
+    var buttonEl = document.createElement('button');
+    buttonEl.innerHTML = button;
+    buttonEl.setAttribute('data-index', i);
+    buttonEl.setAttribute('class', 'list-group-item list-group-item-action');
+    buttonEl.classList.add('buttons');
+    buttonEl.setAttribute('type', 'button');
+    buttonDiv.prepend(buttonEl);
+    buttonEl.addEventListener("click", buttonClickHandler);
   }
 }
-getSaves();
 
-
+function init() {
+  var saves = JSON.parse(localStorage.getItem("savedSearch"));
+  if (saves !== null) {
+    buttonArray = saves;
+  }
+  renderSaves();
+}
 var formSubmitHandler = function (e) {
   e.preventDefault();
 
@@ -44,35 +46,25 @@ var formSubmitHandler = function (e) {
 
   if (searchInput) {
     getCitySearch(searchInput);
-    searchInputEl.value = '';
   }
   else {
     alert('Search format should be city, state code, country code');
   }
 };
+
+// save button click events
 var buttonClickHandler = function (e) {
   var buttonClickTxt = (e.target.innerHTML);
+  console.log(buttonClickTxt);
   if (buttonClickTxt) {
     getCitySearch(buttonClickTxt);
     searchInputEl.value = '';
   }
 };
 
-var newButton = function (city) {
-  var newButtonEl = document.createElement('button');
-  newButtonEl.setAttribute('class', 'list-group-item list-group-item-action');
-  newButtonEl.classList.add('buttons');
-  newButtonEl.setAttribute('type', 'button');
-  newButtonEl.setAttribute('id', city);
-  newButtonEl.addEventListener("click", buttonClickHandler);
-  var buttonTxt = document.createTextNode(city);
-  newButtonEl.appendChild(buttonTxt);
-  buttonDiv.prepend(newButtonEl);
-  buttonArray.push(city);
-  console.log(city)
-  console.log(buttonArray)
+function addSave(name) {
+  buttonArray.push(name);
   localStorage.setItem('savedSearch', JSON.stringify(buttonArray));
-  searchInputEl.value = '';
 }
 
 // THEN I am presented with current and future conditions for that city and that city is added to the search history 
@@ -80,12 +72,10 @@ var newButton = function (city) {
 // calls geocoding API to use lat and lon in next function
 // set up form element text guide that says enter city, state code, and country code
 
-
 function getCitySearch(searchString) {
+  buttonDiv.innerHTML = '';
   // ternary operator, if the value being passed to the function is a string, or a click event
   var searchInput = typeof searchString === "string" ? searchString : searchInputEl.value.trim();
-
-  console.log(searchInput);
   var apiURL = 'https://api.openweathermap.org/geo/1.0/direct?q=' + searchInput + '&limit=10&appid=3b41e908f8123a87745091fffda5bb2b';
   fetch(apiURL)
     .then(function (response) {
@@ -99,14 +89,20 @@ function getCitySearch(searchString) {
       var country = data[0].country;
       var nameData = currentName + ', ' + currentState + ', ' + country;
       cityName.textContent = nameData;
-      // loop over buttonEl.innerhtml  
-      // if nameData !=== buttonEl.innerHTML[i]
-      newButton(nameData);
+      // loop over buttonArray
+      // if nameData !== buttonEl.innerHTML[i]
+      checkArray(nameData);
+      console.log(checkArray());
+      addSave(nameData);
+      renderSaves();
+
       var lat = data[0].lat;
       var lon = data[0].lon;
       var weathURL = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&units=imperial&appid=3b41e908f8123a87745091fffda5bb2b';
       console.log(weathURL);
-
+      /*
+      what if these were two separate functions? could I pass lat and lon into the buttons as parameters??
+      */
       fetch(weathURL)
         .then(function (response) {
           if (response.ok) {
@@ -192,8 +188,19 @@ function getCitySearch(searchString) {
           }
         });
     });
+  searchInputEl.value = '';
 }
-searchButton.addEventListener('click', getCitySearch);
 
+function checkArray(name) {
+  for (let i = 0; i < buttonArray.length; i++) {
+    const element = buttonArray[i];
+    if (element === name) {
+      console.log(true);
+    }
+  }
+}
+
+searchButton.addEventListener('click', getCitySearch);
+init();
 
 
