@@ -61,8 +61,10 @@ var buttonClickHandler = function (e) {
     searchInputEl.value = '';
   }
 };
-
+ 
 function addSave(name) {
+  if (buttonArray.indexOf(name)!== -1) return;
+  console.log(buttonArray.indexOf(name));
   buttonArray.push(name);
   localStorage.setItem('savedSearch', JSON.stringify(buttonArray));
 }
@@ -89,10 +91,6 @@ function getCitySearch(searchString) {
       var country = data[0].country;
       var nameData = currentName + ', ' + currentState + ', ' + country;
       cityName.textContent = nameData;
-      // loop over buttonArray
-      // if nameData !== buttonEl.innerHTML[i]
-      checkArray(nameData);
-      console.log(checkArray());
       addSave(nameData);
       renderSaves();
 
@@ -189,15 +187,6 @@ function getCitySearch(searchString) {
         });
     });
   searchInputEl.value = '';
-}
-
-function checkArray(name) {
-  for (let i = 0; i < buttonArray.length; i++) {
-    const element = buttonArray[i];
-    if (element === name) {
-      console.log(true);
-    }
-  }
 }
 
 searchButton.addEventListener('click', getCitySearch);
