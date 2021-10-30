@@ -21,7 +21,7 @@ Technologies Used: HTML, CSS, JavaScript, Bootstrap, Current Weather API
 
 * This application has not yet been incorporated into a node dev environment. Planned features include refactoring to a React frontend.
 
-* [Deployed Application:](https://ntjohns1.github.io/Weather-Dashboard/)
+* [Deployed Application](https://ntjohns1.github.io/Weather-Dashboard/)
 
 ## License  
 
